@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+	<lista>
+	<item>
+		<link>entretenimiento</link>
+	</item>
+	<item>
+		<link>finanzas</link>
+	</item>
+	<item>
+		<link>futbol</link>
+	</item>
+	<item>
+		<link>internacional</link>
+	</item>
+	<item>
+		<link>mundo</link>
+	</item>
+	<item>
+		<link>nacional</link>
+	</item>
+	<item>
+		<link>politica</link>
+	</item>
+	<item>
+		<link>regional</link>
+	</item>
+</lista>

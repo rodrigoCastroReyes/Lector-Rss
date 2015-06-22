@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<meta name="description" content="Este es un proyecto innovador XD">
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="noticias.css">
+		<script type="text/javascript">
+			function inicializar(){
+				//obtenerNoticias("rss/internacional.xml");
+				obtenerIndice();
+			}
+
+			function obtenerIndice(){
+				var request=new XMLHttpRequest();
+				request.addEventListener("load",llenarIndice,false);
+				request.open("GET","rss/indice.xml",true);
+				request.send(null);
+			}
+
+			function llenarIndice(event){
+				var response=event.target.responseXML;
+				var indice=response.getElementsByTagName("item");
+				var ruta;
+				var li;
+				for(var i=0;i<indice.length;i++){
+					
+					ruta = indice[i].getElementsByTagName("link")[0].firstChild.nodeValue;
+
+					li = document.createElement("li");
+					li.id = ruta;
+					li.innerHTML = ruta;
+					document.getElementById("lista_noticias").appendChild(li);
+					console.log("llenarIndice");
+				}
+
+				$("#lista_noticias").children().on("click",function (event){
+					$("#contenedor").empty();					
+					obtenerNoticias("rss/"+event.target.id+".xml");
+				});
+				obtenerNoticias("rss/entretenimiento.xml");
+
+				console.log("cargo el archivo de noticia");
+			}
+
+			function obtenerNoticias(url){
+				var request=new XMLHttpRequest();
+				request.addEventListener("load",mostrarNoticias,false);
+				request.open("GET",url,true);
+				request.send(null);
+			}
+
+			function leerNoticia(event){
+				var articulo = event.target;
+				var ruta = articulo.getAttribute("data-enlace");
+				var url = "gethtml.php?URL="+escape(ruta);
+				var request=new XMLHttpRequest();
+				request.addEventListener("load",detalleNoticia,false);
+				request.open("GET",url,true);
+				request.send(null);
+			}
+
+			function detalleNoticia(response){
+				console.log("llego");
+			}
+
+			function mostrarNoticias(event){
+				var response=event.target.responseXML;
+				var noticias=response.getElementsByTagName("item");
+				var articulo,titulo,enlace,description,fecha;
+				for(var i=0;i<noticias.length;i++){
+					articulo=document.createElement("article");
+					div=document.createElement("div");
+					articulo.appendChild(div);
+					titulo=noticias[i].getElementsByTagName("title")[0].firstChild.nodeValue;
+					enlace=noticias[i].getElementsByTagName("link")[0].firstChild.nodeValue;
+					description=noticias[i].getElementsByTagName("description")[0].firstChild.nodeValue;
+					fecha=noticias[i].getElementsByTagName("pubDate")[0].firstChild.nodeValue;
+
+					a=document.createElement("a");
+					a.innerHTML=titulo;
+					//a.setAttribute("href",enlace);
+					div.appendChild(a);
+
+					pDescripcion=document.createElement("p");
+					pDescripcion.innerHTML="<br/>"+description+" Fecha: "
+					pDescripcion.setAttribute("data-enlace",enlace);
+
+					div.appendChild(pDescripcion);
+					articulo.setAttribute("class","noticia");
+					document.getElementById("contenedor").appendChild(articulo);
+					pDescripcion.addEventListener('click', leerNoticia,false);
+				}
+			}	
+
+			window.addEventListener('load',inicializar,false);
+		</script>
+	</head>
+	<body>
+		<div >
+			<nav id="barra">
+				<ul id="lista_noticias">
+					
+				</ul>
+			</nav>
+			<div id="contenedor"></div>
+		</div>
+	</body>
+</html>

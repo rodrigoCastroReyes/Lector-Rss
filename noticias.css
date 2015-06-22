@@ -1,0 +1,29 @@
+#contenedor{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-start;
+	flex-wrap:wrap;
+}
+
+#principal{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-start;
+	width: 100%;
+	height: 100%;
+}
+
+#barra{
+	display: flex;
+	height: 100%;
+	width: 100%;
+	margin: 10px;
+}
+
+.noticia{
+	display: flex;
+	width: 25%;
+	margin: 5px 5px;
+	padding: 5px 5px;
+}
+
