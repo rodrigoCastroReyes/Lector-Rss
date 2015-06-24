@@ -15,7 +15,7 @@
 			function obtenerIndice(){
 				var request=new XMLHttpRequest();
 				request.addEventListener("load",llenarIndice,false);
-				request.open("GET","rss/indice.xml",true);
+				request.open("GET","js/indice.xml",true);
 				request.send(null);
 			}
 
@@ -62,7 +62,9 @@
 			}
 
 			function detalleNoticia(response){
-				console.log("llego");
+				console.log("hola mundo");
+				var texto=response.target.responseText;
+				console.log(texto);
 			}
 
 			function mostrarNoticias(event){
@@ -86,7 +88,6 @@
 					pDescripcion=document.createElement("p");
 					pDescripcion.innerHTML="<br/>"+description+" Fecha: "
 					pDescripcion.setAttribute("data-enlace",enlace);
-
 					div.appendChild(pDescripcion);
 					articulo.setAttribute("class","noticia");
 					document.getElementById("contenedor").appendChild(articulo);
